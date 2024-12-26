@@ -1,11 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
 import { urlFor } from "@/lib/imageUrlBuilder";
 import { HeaderProps, NavItem } from "@/types";
-import { useState } from "react";
 import { SanityImageAssetDocument } from "next-sanity";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 
 const Header = ({ data }: HeaderProps) => {
     const [isMobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);

@@ -1,6 +1,16 @@
 import PostDetails from "@/Components/PostDetails";
-import { getPostsById } from "@/lib/sanityFetch";
-import { Post } from "@/types";
+import { getAllQuery, getPostsById } from "@/lib/sanityFetch";
+import { Post, SlugItem } from "@/types";
+
+export async function generateStaticParams() {
+    const slugs: SlugItem[] = (await getAllQuery()) || [];
+
+    const slugRoutes = slugs?.map((item) => item?.slug);
+
+    return slugRoutes?.map((slug) => ({
+        slug,
+    }));
+}
 
 export default async function Page({
     params,
@@ -17,3 +27,5 @@ export default async function Page({
         </>
     );
 }
+
+

@@ -1,7 +1,7 @@
-import Link from "next/link";
-import { nestHeadings } from "./utils/nestHeadings";
-import { Headings, TreeNode } from "@/types";
 import { cn } from "@/lib/utilities/cn";
+import { Headings, TreeNode } from "@/types";
+import Link from "next/link";
+import { nestHeadings } from "../utils/nestHeadings";
 
 export function RenderToc({
     elements,

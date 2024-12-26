@@ -1,4 +1,3 @@
-// pages/about.js
 import Image from 'next/image';
 
 export default function About() {
@@ -7,7 +6,7 @@ export default function About() {
             <div className="max-w-4xl mx-auto p-8 bg-white rounded-lg shadow-lg">
                 <div className="flex justify-center mb-6">
                     <Image
-                        src="/profile.jpg" // Replace with your image path
+                        src="/profile.jpg"
                         alt="Profile Picture"
                         width={150}
                         height={150}

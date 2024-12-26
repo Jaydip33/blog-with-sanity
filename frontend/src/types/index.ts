@@ -148,9 +148,7 @@ export interface BlogProps {
         _id: string;
         title: string;
         description: string;
-        slug: {
-            current: string;
-        };
+        slug: string;
         mainImage: {
             asset: SanityImageAssetDocument | null;
         };
@@ -175,3 +173,8 @@ export type Headings = {
     _key: string;
     children: { text: string }[];
 }[];
+
+export interface SlugItem {
+    slug: string;
+    data?: string;
+}

@@ -1,19 +1,18 @@
 "use client";
 
 import { urlFor } from "@/lib/imageUrlBuilder";
+import { BlogProps } from "@/types";
+import { format } from "date-fns";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { format } from "date-fns";
-import { BlogProps } from "@/types";
 import { useState } from "react";
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from "react-infinite-scroll-component";
 
 const Blogs = (item: BlogProps) => {
     const { post, title, button } = item || {};
     const router = useRouter();
     const [items, setItems] = useState(post.slice(0, 6) || []);
     const [hasMore, setHasMore] = useState(true);
-    const [page, setPage] = useState(2);
 
     const formatDate = (date: string) => {
         return format(new Date(date), "MMM dd, yyyy");
@@ -25,10 +24,9 @@ const Blogs = (item: BlogProps) => {
 
     const fetchMoreData = () => {
         setTimeout(() => {
-            const newPosts = post.slice(page * 3, (page + 1) * 3);
+            const newPosts = post.slice(items.length, items.length + 3);
             if (newPosts.length > 0) {
                 setItems((prevItems) => [...prevItems, ...newPosts]);
-                setPage(page + 1);
             } else {
                 setHasMore(false);
             }
@@ -58,7 +56,7 @@ const Blogs = (item: BlogProps) => {
                                 <div
                                     key={index}
                                     className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transform transition-all duration-300 hover:scale-105 hover:translate-y-1 cursor-pointer"
-                                    onClick={() => handleNavigate(item?.slug?.current)}
+                                    onClick={() => handleNavigate(item?.slug)}
                                 >
                                     <Image
                                         src={

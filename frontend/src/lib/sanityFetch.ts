@@ -1,21 +1,22 @@
+import { PageData, Post, Settings, SlugItem } from "@/types";
 import { QueryParams } from "sanity";
 import { layoutprops } from "./queries";
 import client from "./sanityClient";
-import { PageData, Post, Settings } from "@/types";
 
 export async function sanityFetch<QueryResponse>({
     query,
     qParams = {},
-    tags,
+    useCache = true,
 }: {
     query: string;
     qParams?: QueryParams;
-    tags: string[];
+    useCache?: boolean;
 }): Promise<QueryResponse> {
-    return client.fetch<QueryResponse>(query, qParams, {
-        cache: "force-cache",
-        next: { tags, revalidate: 0 },
-    });
+    const options = useCache
+        ? { cache: "force-cache" as RequestCache }
+        : { next: { revalidate: 0 } };
+
+    return client.fetch<QueryResponse>(query, qParams, options);
 }
 
 export const getPostsById = async (slug: string): Promise<Post | null> => {
@@ -23,7 +24,7 @@ export const getPostsById = async (slug: string): Promise<Post | null> => {
         const data = await sanityFetch<Post>({
             query: layoutprops.postById,
             qParams: { slug },
-            tags: ["post", "author", "category"],
+            useCache: true,
         });
 
         return data;
@@ -38,7 +39,7 @@ export const getPageData = async (slug: string): Promise<PageData | null> => {
         const data = await sanityFetch<PageData>({
             query: layoutprops.pagequery,
             qParams: { slug },
-            tags: ["post", "author", "category", "page"],
+            useCache: true,
         });
 
         return data;
@@ -53,7 +54,22 @@ export const getSettingQuery = async (): Promise<Settings | null> => {
         const data = await sanityFetch<Settings>({
             query: layoutprops.settingsQuery,
             qParams: {},
-            tags: ["post", "author", "category", "settings"],
+            useCache: true,
+        });
+
+        return data;
+    } catch (error) {
+        console.error("Error fetching settings:", error);
+        return null;
+    }
+};
+
+export const getAllQuery = async (): Promise<SlugItem[] | null> => {
+    try {
+        const data = await sanityFetch<SlugItem[]>({
+            query: layoutprops.allPostQiery,
+            qParams: {},
+            useCache: true,
         });
 
         return data;

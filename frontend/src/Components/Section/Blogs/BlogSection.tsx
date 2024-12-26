@@ -1,5 +1,5 @@
-import Blogs from "./Blogs";
 import { BlogProps } from "@/types";
+import Blogs from "./Blogs";
 
 const BlogSection = ({ data }: { data: BlogProps[] }) => {
     return (

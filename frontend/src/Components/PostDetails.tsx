@@ -54,17 +54,6 @@ const PostDetails = ({ data }: PostDetailsProps) => {
                     </h3>
                 );
             },
-            h4: ({ children, value }) => {
-                const slug = slugify(toPlainText(value));
-                return (
-                    <h4
-                        id={slug}
-                        className="text-lg mb-4 sm:text-3xl text-gray-800 tracking-wide"
-                    >
-                        {children}
-                    </h4>
-                );
-            },
             normal: ({ children }) => (
                 <p className="mb-4 text-lg sm:text-xl text-gray-800 leading-relaxed">
                     {children}
@@ -123,24 +112,22 @@ const PostDetails = ({ data }: PostDetailsProps) => {
         <div className="min-h-screen bg-gray-50 text-gray-900">
             <main className="container mx-auto p-4 sm:p-6 lg:p-8 flex">
                 <div className="lg:col-span-2 bg-white p-8 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-y-auto lg:w-2/3">
-                    <div className="mb-8">
-                        {imageUrl && (
-                            <div className="mb-6 relative rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500">
-                                <Image
-                                    src={imageUrl || ""}
-                                    alt={title || "Post image"}
-                                    className="object-cover w-full h-72 sm:h-96 lg:h-[400px] transition-transform duration-500 transform hover:scale-105"
-                                    width={1200}
-                                    height={800}
-                                />
-                                {title && (
-                                    <div className="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-lg sm:text-xl font-bold p-3 rounded-lg shadow-md">
-                                        {title}
-                                    </div>
-                                )}
-                            </div>
-                        )}
-                    </div>
+                    {imageUrl && (
+                        <div className="mb-6 relative rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500">
+                            <Image
+                                src={imageUrl || ""}
+                                alt={title || "Post image"}
+                                className="object-cover w-full h-72 sm:h-96 lg:h-[400px] transition-transform duration-500 transform hover:scale-105"
+                                width={1200}
+                                height={800}
+                            />
+                            {title && (
+                                <div className="absolute bottom-4 left-4 bg-black bg-opacity-60 text-white text-lg sm:text-xl font-bold p-3 rounded-lg shadow-md">
+                                    {title}
+                                </div>
+                            )}
+                        </div>
+                    )}
 
                     {body ? (
                         <div className="text-gray-700 mb-6 leading-relaxed space-y-6">
@@ -156,13 +143,11 @@ const PostDetails = ({ data }: PostDetailsProps) => {
 
                 <div className="h-auto lg:sticky lg:top-20 lg:w-1/3">
                     <div className="bg-gradient-to-tl from-indigo-600 via-purple-700 to-pink-600 text-white p-6 rounded-lg shadow-md hover:shadow-xl transition-all duration-300">
-                        <ul className="space-y-4">
-                            {headings.length > 0 ? (
-                                <Toc headings={headings} title="Post content" />
-                            ) : (
-                                <p>No headings available.</p>
-                            )}
-                        </ul>
+                        {headings.length > 0 ? (
+                            <Toc headings={headings} title="Post content" />
+                        ) : (
+                            <p>No headings available.</p>
+                        )}
                     </div>
                 </div>
             </main>

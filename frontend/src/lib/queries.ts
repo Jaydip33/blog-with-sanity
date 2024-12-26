@@ -1,54 +1,36 @@
 import { groq } from "next-sanity";
 
-const customeImage = `
-url,
-metadata{
-    dimensions{
-    width,
-    height
-    }
-  }
-`;
-
 const headerData = `
 "header":header->{
-    ...,
-    "logo":logo.asset->{
-    ${customeImage}
-    },
-    "navItem":navItem[]{...,
-    "href":link->url,
-    "label":link->label,
-    "slug":link->slug
-    },
+    logo,
+    navItem,
   }`;
 
 const footerData = `
   "footer":footer->{
-    ...,
     "socialLinks":socialLinks[]{...},
     footerText,
-    "contactInfo": contactInfo[]{...},
-    "footerLinks":footerLinks[]{...},
+    contactInfo,
+    footerLinks,
     logo
   }`;
 
-const postQiery = `*[_type == "post" ][0..5]{
+const postQiery = `*[_type == "post"][0..5]{
   ...,
   "author":author->{
   ...
   }
 }`;
 
-const allPostQiery = `*[_type == "post" ][]{
+const allPostQiery = `*[_type == "post"][]{
   ...,
   "author":author->{
   ...
-  }
+  },
+   "slug":slug.current
 }`;
 
 const sections = `
-  ...,
   (_type=="hero")=>{
     ...
   },
@@ -67,7 +49,6 @@ const sections = `
 
 export const postById = groq`
   *[_type == "post" && slug.current == $slug][0]{
-    ...,
     "headings": body[style in ["h1", "h2", "h3", "h4", "h5", "h6"]],
     "author": author->{
       _id,
@@ -107,4 +88,5 @@ export const layoutprops = {
   settingsQuery,
   pagequery,
   postById,
+  allPostQiery,
 };
