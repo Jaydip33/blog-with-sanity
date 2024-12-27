@@ -177,4 +177,5 @@ export type Headings = {
 export interface SlugItem {
     slug: string;
     data?: string;
+    publishedAt?: string;
 }
